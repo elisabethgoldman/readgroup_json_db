@@ -17,7 +17,7 @@ ENV HOME /home/ubuntu
 
 WORKDIR ${HOME}
 
-ENV readgroup_json_db 0.3
+ENV readgroup_json_db 0.4
 
 RUN /bin/bash -c "source ${HOME}/.virtualenvs/p3/bin/activate \
     && pip install readgroup_json_db"
