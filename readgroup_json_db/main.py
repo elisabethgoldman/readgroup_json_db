@@ -57,6 +57,7 @@ def main():
     args = parser.parse_args()
     tool_name = 'readgroup_json_db'
     uuid = args.uuid
+    json_path = args.json_path
 
     if args.db_cred_s3url:
         db_cred_s3url = args.db_cred_s3url
