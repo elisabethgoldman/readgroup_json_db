@@ -1,7 +1,5 @@
 FROM quay.io/jeremiahsavage/cdis_base
 
-ENV readgroup_json_db 0.1
-
 MAINTAINER Jeremiah H. Savage <jeremiahsavage@gmail.com>
 
 USER root
@@ -18,6 +16,8 @@ USER ubuntu
 ENV HOME /home/ubuntu
 
 WORKDIR ${HOME}
+
+ENV readgroup_json_db 0.2
 
 RUN /bin/bash -c "source ${HOME}/.virtualenvs/p3/bin/activate \
     && pip install readgroup_json_db"
