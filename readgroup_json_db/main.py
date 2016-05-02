@@ -9,6 +9,7 @@ import pandas as pd
 import sqlalchemy
 
 from cdis_pipe_utils import pipe_util
+from cdis_pipe_utils import df_util
 
 
 def readgroup_to_db(json_data, uuid, engine, logger):
