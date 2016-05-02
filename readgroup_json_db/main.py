@@ -78,7 +78,7 @@ def main():
 
     with open(json_path, 'r') as json_open:
         json_data = json.load(json_open)
-    readgroup_to_db(json_data, engine, logger)
+    readgroup_to_db(json_data, uuid, engine, logger)
         
     return
 
