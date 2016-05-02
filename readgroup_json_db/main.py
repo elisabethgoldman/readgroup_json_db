@@ -16,7 +16,7 @@ def readgroup_to_db(json_data, uuid, engine, logger):
         rg_dict['uuid'] = [uuid]
         rg_dict['ID'] = json_data['ID']
         rg_dict['key'] = rg_key
-        rg_dict['value'] = readgroup[rg_key]
+        rg_dict['value'] = json_data[rg_key]
         df = pd.DataFrame(rg_dict)
         unique_key_dict = {'uuid': uuid, 'ID': readgroup['ID'], 'key': rg_key}
         df_util.save_df_to_sqlalchemy(df, unique_key_dict, table_name, engine, logger)
