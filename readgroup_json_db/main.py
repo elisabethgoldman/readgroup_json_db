@@ -5,6 +5,7 @@ import json
 import logging
 import sys
 
+import pandas as pd
 import sqlalchemy
 
 from cdis_pipe_utils import pipe_util
