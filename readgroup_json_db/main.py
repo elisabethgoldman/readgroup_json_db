@@ -13,6 +13,7 @@ from cdis_pipe_utils import df_util
 
 
 def readgroup_to_db(json_data, uuid, engine, logger):
+    table_name = 'readgroups'
     for rg_key in sorted(json_data.keys()):
         rg_dict = dict()
         rg_dict['uuid'] = [uuid]
