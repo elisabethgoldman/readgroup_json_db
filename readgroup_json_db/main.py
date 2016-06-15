@@ -47,44 +47,23 @@ def main():
                         help = 'uuid string',
     )
 
-    # optional flags
-    parser.add_argument('--db_cred_s3url',
-                        required = False
-    )
-    parser.add_argument('--s3cfg_path',
-                        required = False
-    )
-
-    
     # setup required parameters
     args = parser.parse_args()
     tool_name = 'readgroup_json_db'
     uuid = args.uuid
     json_path = args.json_path
 
-    if args.db_cred_s3url:
-        db_cred_s3url = args.db_cred_s3url
-    else:
-        db_cred_s3url = None
-    if args.s3cfg_path:
-        s3cfg_path = args.s3cfg_path
-
     logger = pipe_util.setup_logging(tool_name, args, uuid)
 
-    if db_cred_s3url is not None: #db server case
-        conn_dict = pipe_util.get_connect_dict(db_cred_s3url, s3cfg_path, logger)
-        engine = sqlalchemy.create_engine(sqlalchemy.engine.url.URL(**conn_dict))
-    else: # local sqlite case
-        sqlite_name = uuid + '.db'
-        engine_path = 'sqlite:///' + sqlite_name
-        engine = sqlalchemy.create_engine(engine_path, isolation_level='SERIALIZABLE')
+    sqlite_name = uuid + '.db'
+    engine_path = 'sqlite:///' + sqlite_name
+    engine = sqlalchemy.create_engine(engine_path, isolation_level='SERIALIZABLE')
 
     with open(json_path, 'r') as json_open:
         json_data = json.load(json_open)
     readgroup_to_db(json_data, uuid, engine, logger)
         
     return
-
 
 if __name__ == '__main__':
     main()
