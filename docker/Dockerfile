@@ -1,14 +1,14 @@
-FROM quay.io/jeremiahsavage/cdis_base
+FROM ubuntu:xenial-20160809
 
 MAINTAINER Jeremiah H. Savage <jeremiahsavage@gmail.com>
 
-USER ubuntu
+USER root
 
-ENV HOME /home/ubuntu
+RUN apt-get update && apt-get install -y \
+    python3-pandas \
+    python3-pip \
+    python3-sqlalchemy
 
-WORKDIR ${HOME}
+ENV readgroup_json_db 0.15
 
-ENV readgroup_json_db 0.14
-
-RUN /bin/bash -c "source ${HOME}/.virtualenvs/p3/bin/activate \
-    && pip install readgroup_json_db"
+RUN pip3 install readgroup_json_db
