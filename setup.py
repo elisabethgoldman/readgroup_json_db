@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 setup(name = 'readgroup_json_db',
       author = 'Jeremiah H. Savage',
       author_email = 'jeremiahsavage@gmail.com',
-      version = 0.18,
+      version = 0.19,
       description = 'read readgroup data as json and store in sqlitedb',
       url = 'https://github.com/jeremiahsavage/readgroup_json_db',
       license = 'Apache 2.0',
