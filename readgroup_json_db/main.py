@@ -22,7 +22,7 @@ def readgroup_to_db(json_data, uuid, engine, logger):
 
 
 def setup_logging(args, uuid):
-    basicConfig(
+    logging.basicConfig(
         filename=os.path.join(uuid + '.log'),
         level=args.level,
         filemode='w',
@@ -30,7 +30,7 @@ def setup_logging(args, uuid):
         datefmt='%Y-%m-%d_%H:%M:%S_%Z',
     )
     getLogger('sqlalchemy.engine').setLevel(INFO)
-    logger = getLogger(__name__)
+    logger = logging.getLogger(__name__)
     return logger
 
 
