@@ -18,7 +18,7 @@ def readgroup_to_db(json_data, uuid, engine, logger):
         rg_dict['key'] = rg_key
         rg_dict['value'] = json_data[rg_key]
         df = pd.DataFrame(rg_dict)
-        df.to_sql(table_name, engine)
+        df.to_sql(table_name, engine, if_exists='append')
     return
 
 
