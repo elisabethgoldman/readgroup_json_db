@@ -12,8 +12,7 @@ setup(name = 'readgroup_json_db',
       packages = find_packages(),
       install_requires = [
           'pandas',
-          'sqlalchemy',
-          'cdis_pipe_utils'
+          'sqlalchemy'
       ],
       classifiers = [
           'Development Status :: 3 - Alpha',
