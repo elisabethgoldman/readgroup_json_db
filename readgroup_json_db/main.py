@@ -30,7 +30,7 @@ def setup_logging(args, uuid):
         format='%(asctime)s %(levelname)s %(message)s',
         datefmt='%Y-%m-%d_%H:%M:%S_%Z',
     )
-    getLogger('sqlalchemy.engine').setLevel(INFO)
+    logging.getLogger('sqlalchemy.engine').setLevel(INFO)
     logger = logging.getLogger(__name__)
     return logger
 
