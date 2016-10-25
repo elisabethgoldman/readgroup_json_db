@@ -12,6 +12,8 @@ RUN echo 'Acquire::http::Proxy "http://cloud-proxy:3128";' >> /etc/apt/apt.conf.
        python3-pip \
        python3-sqlalchemy \
     && apt-get clean \
+    && export http_proxy=http://cloud-proxy:3128 \
+    && export https_proxy=http://cloud-proxy:3128 \
     && pip3 install readgroup_json_db \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && rm -f /etc/apt/apt.conf.d/01proxy
