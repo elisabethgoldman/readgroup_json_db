@@ -1,4 +1,4 @@
-FROM ubuntu:xenial-20160809
+FROM ubuntu:xenial-20161010
 
 MAINTAINER Jeremiah H. Savage <jeremiahsavage@gmail.com>
 
@@ -10,5 +10,5 @@ RUN apt-get update \
        python3-pip \
        python3-sqlalchemy \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && pip3 install readgroup_json_db
+    && pip3 install readgroup_json_db \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
