@@ -9,11 +9,11 @@ import sys
 import pandas as pd
 import sqlalchemy
 
-def readgroup_to_db(json_data, job_uuid, engine, logger):
+def readgroup_to_db(json_data, task_uuid, engine, logger):
     table_name = 'readgroups'
     for rg_key in sorted(json_data.keys()):
         rg_dict = dict()
-        rg_dict['job_uuid'] = [job_uuid]
+        rg_dict['task_uuid'] = [task_uuid]
         rg_dict['ID'] = json_data['ID']
         rg_dict['key'] = rg_key
         rg_dict['value'] = json_data[rg_key]
@@ -22,9 +22,9 @@ def readgroup_to_db(json_data, job_uuid, engine, logger):
     return
 
 
-def setup_logging(args, job_uuid):
+def setup_logging(args, task_uuid):
     logging.basicConfig(
-        filename=os.path.join(job_uuid + '.log'),
+        filename=os.path.join(task_uuid + '.log'),
         level=args.level,
         filemode='w',
         format='%(asctime)s %(levelname)s %(message)s',
@@ -51,24 +51,24 @@ def main():
     parser.add_argument('--json_path',
                         required = True
     )
-    parser.add_argument('--job_uuid',
+    parser.add_argument('--task_uuid',
                         required = True
     )
 
     # setup required parameters
     args = parser.parse_args()
-    job_uuid = args.job_uuid
+    task_uuid = args.task_uuid
     json_path = args.json_path
 
-    logger = setup_logging(args, job_uuid)
+    logger = setup_logging(args, task_uuid)
 
-    sqlite_name = job_uuid + '.db'
+    sqlite_name = task_uuid + '.db'
     engine_path = 'sqlite:///' + sqlite_name
     engine = sqlalchemy.create_engine(engine_path, isolation_level='SERIALIZABLE')
 
     with open(json_path, 'r') as json_open:
         json_data = json.load(json_open)
-        readgroup_to_db(json_data, job_uuid, engine, logger)
+        readgroup_to_db(json_data, task_uuid, engine, logger)
         
     return
 
