@@ -4,10 +4,10 @@ import argparse
 import json
 import logging
 import os
-import sys
 
 import pandas as pd
 import sqlalchemy
+
 
 def readgroup_to_db(json_data, job_uuid, engine, logger):
     table_name = 'readgroups'
@@ -39,21 +39,19 @@ def main():
     parser = argparse.ArgumentParser('readgroup json db insertion')
 
     # Logging flags.
-    parser.add_argument('-d', '--debug',
-        action = 'store_const',
-        const = logging.DEBUG,
-        dest = 'level',
-        help = 'Enable debug logging.',
+    parser.add_argument(
+        '-d',
+        '--debug',
+        action='store_const',
+        const=logging.DEBUG,
+        dest='level',
+        help='Enable debug logging.',
     )
-    parser.set_defaults(level = logging.INFO)
-    
+    parser.set_defaults(level=logging.INFO)
+
     # Required flags.
-    parser.add_argument('--json_path',
-                        required = True
-    )
-    parser.add_argument('--job_uuid',
-                        required = True
-    )
+    parser.add_argument('--json_path', required=True)
+    parser.add_argument('--job_uuid', required=True)
 
     # setup required parameters
     args = parser.parse_args()
@@ -69,8 +67,9 @@ def main():
     with open(json_path, 'r') as json_open:
         json_data = json.load(json_open)
         readgroup_to_db(json_data, job_uuid, engine, logger)
-        
+
     return
+
 
 if __name__ == '__main__':
     main()
