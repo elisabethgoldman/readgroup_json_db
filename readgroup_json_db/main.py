@@ -9,7 +9,7 @@ import pandas as pd
 import sqlalchemy
 
 
-def readgroup_to_db(json_data, job_uuid, engine, logger):
+def readgroup_to_db(json_data: dict, job_uuid: str, engine: sqlalchemy.engine) -> None:
     table_name = 'readgroups'
     for rg_key in sorted(json_data.keys()):
         rg_dict = dict()
@@ -22,7 +22,7 @@ def readgroup_to_db(json_data, job_uuid, engine, logger):
     return
 
 
-def setup_logging(args, job_uuid):
+def setup_logging(args: argparse.Namespace, job_uuid: str) -> logging.Logger:
     logging.basicConfig(
         filename=os.path.join(job_uuid + '.log'),
         level=args.level,
@@ -35,7 +35,7 @@ def setup_logging(args, job_uuid):
     return logger
 
 
-def main():
+def main() -> int:
     parser = argparse.ArgumentParser('readgroup json db insertion')
 
     # Logging flags.
@@ -60,15 +60,15 @@ def main():
 
     logger = setup_logging(args, job_uuid)
 
-    sqlite_name = job_uuid + '.db'
-    engine_path = 'sqlite:///' + sqlite_name
+    sqlite_name = f"{job_uuid}.db"
+    engine_path = f'sqlite:///{sqlite_name}'
     engine = sqlalchemy.create_engine(engine_path, isolation_level='SERIALIZABLE')
 
     with open(json_path, 'r') as json_open:
         json_data = json.load(json_open)
-        readgroup_to_db(json_data, job_uuid, engine, logger)
+        readgroup_to_db(json_data, job_uuid, engine)
 
-    return
+    return 0
 
 
 if __name__ == '__main__':
