@@ -4,12 +4,12 @@ import argparse
 import json
 import logging
 import os
-import sys
 
 import pandas as pd
 import sqlalchemy
 
-def readgroup_to_db(json_data, job_uuid, engine, logger):
+
+def readgroup_to_db(json_data: dict, job_uuid: str, engine: sqlalchemy.engine) -> None:
     table_name = 'readgroups'
     for rg_key in sorted(json_data.keys()):
         rg_dict = dict()
@@ -22,7 +22,7 @@ def readgroup_to_db(json_data, job_uuid, engine, logger):
     return
 
 
-def setup_logging(args, job_uuid):
+def setup_logging(args: argparse.Namespace, job_uuid: str) -> logging.Logger:
     logging.basicConfig(
         filename=os.path.join(job_uuid + '.log'),
         level=args.level,
@@ -35,25 +35,23 @@ def setup_logging(args, job_uuid):
     return logger
 
 
-def main():
+def main() -> int:
     parser = argparse.ArgumentParser('readgroup json db insertion')
 
     # Logging flags.
-    parser.add_argument('-d', '--debug',
-        action = 'store_const',
-        const = logging.DEBUG,
-        dest = 'level',
-        help = 'Enable debug logging.',
+    parser.add_argument(
+        '-d',
+        '--debug',
+        action='store_const',
+        const=logging.DEBUG,
+        dest='level',
+        help='Enable debug logging.',
     )
-    parser.set_defaults(level = logging.INFO)
-    
+    parser.set_defaults(level=logging.INFO)
+
     # Required flags.
-    parser.add_argument('--json_path',
-                        required = True
-    )
-    parser.add_argument('--job_uuid',
-                        required = True
-    )
+    parser.add_argument('--json_path', required=True)
+    parser.add_argument('--job_uuid', required=True)
 
     # setup required parameters
     args = parser.parse_args()
@@ -62,15 +60,16 @@ def main():
 
     logger = setup_logging(args, job_uuid)
 
-    sqlite_name = job_uuid + '.db'
-    engine_path = 'sqlite:///' + sqlite_name
+    sqlite_name = f"{job_uuid}.db"
+    engine_path = f'sqlite:///{sqlite_name}'
     engine = sqlalchemy.create_engine(engine_path, isolation_level='SERIALIZABLE')
 
     with open(json_path, 'r') as json_open:
         json_data = json.load(json_open)
-        readgroup_to_db(json_data, job_uuid, engine, logger)
-        
-    return
+        readgroup_to_db(json_data, job_uuid, engine)
+
+    return 0
+
 
 if __name__ == '__main__':
     main()
