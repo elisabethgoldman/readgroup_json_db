@@ -1,4 +1,6 @@
-FROM python:3 as builder
+FROM python:3.8 as builder
+
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY ./ /opt
 
@@ -6,7 +8,8 @@ WORKDIR /opt
 
 RUN pip install tox && tox -p
 
-FROM python:3
+
+FROM python:3.8
 
 COPY --from=builder /opt/dist/*.tar.gz /opt
 COPY requirements.txt /opt
